@@ -140,21 +140,24 @@ ax.bar(
     income_df["수익(USD)"]
 )
 
-ax.set_title("예상 광고 수익")
-ax.set_ylabel("USD")
+# 제목
+ax.set_title(
+    "예상 광고 수익",
+    fontname=font_name
+)
+
+# y축 이름
+ax.set_ylabel(
+    "USD",
+    fontname=font_name
+)
+
+# x축 눈금(최소/평균/최대)
+for label in ax.get_xticklabels():
+    label.set_fontname(font_name)
+
+# y축 눈금
+for label in ax.get_yticklabels():
+    label.set_fontname(font_name)
 
 st.pyplot(fig)
-
-# --------------------------
-# 참고 정보
-# --------------------------
-
-st.info("""
-일반적인 유튜브 CPM 범위
-
-- 게임: $1 ~ $4
-- 브이로그: $1 ~ $5
-- 교육: $5 ~ $15
-- 금융/투자: $10 ~ $30
-- IT/기술: $5 ~ $20
-""")
