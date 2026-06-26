@@ -16,19 +16,16 @@ st.set_page_config(
 # ==========================
 # 한글 폰트 설정
 # ==========================
-# Streamlit Cloud 시스템 폰트 경로 (packages.txt에 fonts-nanum 필요)
+# pages 폴더 안에 NanumGothic.ttf가 있으므로 같은 폴더에서 찾기
+font_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'NanumGothic.ttf')
 system_font = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
-# 로컬 폰트 경로
-local_font = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'NanumGothic.ttf')
 
-if os.path.exists(local_font):
-    font_manager.fontManager.addfont(local_font)
-    plt.rc('font', family=fm.FontProperties(fname=local_font).get_name())
+if os.path.exists(font_path):
+    font_manager.fontManager.addfont(font_path)
+    plt.rc('font', family=fm.FontProperties(fname=font_path).get_name())
 elif os.path.exists(system_font):
     font_manager.fontManager.addfont(system_font)
     plt.rc('font', family=fm.FontProperties(fname=system_font).get_name())
-else:
-    st.warning("한글 폰트를 찾을 수 없습니다. packages.txt에 fonts-nanum을 추가해주세요.")
 
 plt.rcParams['axes.unicode_minus'] = False
 
