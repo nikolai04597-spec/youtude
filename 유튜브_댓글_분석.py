@@ -1,4 +1,4 @@
-```python
+
 # app.py
 
 import re
@@ -296,4 +296,4 @@ if st.button("댓글 분석 시작"):
     col1.metric("총 댓글 수", len(df))
     col2.metric("평균 좋아요", round(df["좋아요"].mean(), 2))
     col3.metric("최대 좋아요", int(df["좋아요"].max()))
-```
+
