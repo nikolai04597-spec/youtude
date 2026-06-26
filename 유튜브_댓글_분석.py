@@ -16,7 +16,7 @@ from wordcloud import WordCloud
 # 설정
 # ===============================
 
-YOUTUBE_API_KEY = "본인의_API_KEY"
+YOUTUBE_API_KEY = "AIzaSyC5JQ2TWUnvWjP6m0dnKcEjtouPryQd22w"
 
 st.set_page_config(
     page_title="YouTube 댓글 분석기",
