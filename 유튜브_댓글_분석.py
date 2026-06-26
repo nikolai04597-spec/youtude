@@ -22,12 +22,13 @@ st.set_page_config(
 # ==================================================
 # 한글 폰트 설정
 # ==================================================
-font_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pages', 'NanumGothic.ttf')
+font_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'NanumGothic.ttf')
 system_font = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
 
 if not os.path.exists(font_path):
     font_path = system_font
 
+fm.fontManager.addfont(font_path)
 font_prop = fm.FontProperties(fname=font_path)
 plt.rcParams["font.family"] = font_prop.get_name()
 plt.rcParams["axes.unicode_minus"] = False
