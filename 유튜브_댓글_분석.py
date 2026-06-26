@@ -1,4 +1,5 @@
 import re
+import os
 from collections import Counter
 
 import pandas as pd
@@ -21,21 +22,19 @@ st.set_page_config(
 # ==================================================
 # 한글 폰트 설정
 # ==================================================
-font_path = "NanumGothic.ttf"
-font_prop = fm.FontProperties(fname=font_path)
+font_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pages', 'NanumGothic.ttf')
+system_font = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
 
+if not os.path.exists(font_path):
+    font_path = system_font
+
+font_prop = fm.FontProperties(fname=font_path)
 plt.rcParams["font.family"] = font_prop.get_name()
 plt.rcParams["axes.unicode_minus"] = False
 
 # ==================================================
 # YouTube API Key
-# Streamlit Cloud -> Settings -> Secrets에 저장 권장
 # ==================================================
-
-# 방법 1 (권장)
-# secrets.toml
-# YOUTUBE_API_KEY = "여기에 API KEY"
-
 try:
     YOUTUBE_API_KEY = st.secrets["YOUTUBE_API_KEY"]
 except:
@@ -225,20 +224,9 @@ if st.button("댓글 분석 시작"):
         marker="o"
     )
 
-    ax1.set_title(
-        "시간대별 댓글 수",
-        fontproperties=font_prop
-    )
-
-    ax1.set_xlabel(
-        "시간",
-        fontproperties=font_prop
-    )
-
-    ax1.set_ylabel(
-        "댓글 수",
-        fontproperties=font_prop
-    )
+    ax1.set_title("시간대별 댓글 수", fontproperties=font_prop)
+    ax1.set_xlabel("시간", fontproperties=font_prop)
+    ax1.set_ylabel("댓글 수", fontproperties=font_prop)
 
     st.pyplot(fig1)
 
@@ -249,25 +237,11 @@ if st.button("댓글 분석 시작"):
 
     fig2, ax2 = plt.subplots(figsize=(10, 4))
 
-    ax2.hist(
-        df["좋아요"],
-        bins=30
-    )
+    ax2.hist(df["좋아요"], bins=30)
 
-    ax2.set_title(
-        "댓글 좋아요 분포",
-        fontproperties=font_prop
-    )
-
-    ax2.set_xlabel(
-        "좋아요 수",
-        fontproperties=font_prop
-    )
-
-    ax2.set_ylabel(
-        "댓글 개수",
-        fontproperties=font_prop
-    )
+    ax2.set_title("댓글 좋아요 분포", fontproperties=font_prop)
+    ax2.set_xlabel("좋아요 수", fontproperties=font_prop)
+    ax2.set_ylabel("댓글 개수", fontproperties=font_prop)
 
     st.pyplot(fig2)
 
@@ -276,19 +250,13 @@ if st.button("댓글 분석 시작"):
     # ==================================================
     st.subheader("☁️ 워드클라우드")
 
-    all_text = " ".join(
-        df["댓글"].astype(str)
-    )
+    all_text = " ".join(df["댓글"].astype(str))
 
     wc, counter = create_wordcloud(all_text)
 
     fig3, ax3 = plt.subplots(figsize=(14, 7))
 
-    ax3.imshow(
-        wc,
-        interpolation="bilinear"
-    )
-
+    ax3.imshow(wc, interpolation="bilinear")
     ax3.axis("off")
 
     st.pyplot(fig3)
@@ -305,22 +273,10 @@ if st.button("댓글 분석 시작"):
 
     fig4, ax4 = plt.subplots(figsize=(10, 6))
 
-    ax4.barh(
-        top20["단어"],
-        top20["빈도"]
-    )
-
+    ax4.barh(top20["단어"], top20["빈도"])
     ax4.invert_yaxis()
-
-    ax4.set_title(
-        "단어 빈도 TOP20",
-        fontproperties=font_prop
-    )
-
-    ax4.set_xlabel(
-        "빈도수",
-        fontproperties=font_prop
-    )
+    ax4.set_title("단어 빈도 TOP20", fontproperties=font_prop)
+    ax4.set_xlabel("빈도수", fontproperties=font_prop)
 
     for label in ax4.get_yticklabels():
         label.set_fontproperties(font_prop)
@@ -330,10 +286,7 @@ if st.button("댓글 분석 시작"):
 
     st.pyplot(fig4)
 
-    st.dataframe(
-        top20,
-        use_container_width=True
-    )
+    st.dataframe(top20, use_container_width=True)
 
     # ==================================================
     # 통계
@@ -349,9 +302,7 @@ if st.button("댓글 분석 시작"):
     # ==================================================
     # CSV 다운로드
     # ==================================================
-    csv = df.to_csv(
-        index=False
-    ).encode("utf-8-sig")
+    csv = df.to_csv(index=False).encode("utf-8-sig")
 
     st.download_button(
         "📥 댓글 CSV 다운로드",
